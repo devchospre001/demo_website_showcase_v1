@@ -1,0 +1,63 @@
+---
+import Container from "../ui/Container.astro";
+import Logo from "../ui/Logo.astro";
+import { nav, phoneDisplay, phoneHref, quoteHref, site } from "../../lib/site";
+
+// Centered footer from the concept. Phones: 2-column nav, phone, hours, fine print.
+// Desktop adds the tagline, email, service areas and the legal links.
+const year = new Date().getFullYear();
+const footerNav = [...nav, { label: "Get a quote", href: quoteHref }];
+---
+
+<footer class="on-dark bg-night text-on-night">
+  <Container class="flex flex-col items-center gap-6 pt-14 pb-10 text-center lg:gap-9 lg:pt-22 lg:pb-12">
+    <Logo variant="stacked" />
+    <p class="hidden max-w-[520px] text-[17px] leading-[1.6] lg:block">{site.tagline}</p>
+
+    <nav aria-label="Footer">
+      <ul class="grid grid-cols-2 gap-x-6 gap-y-1 lg:flex lg:gap-8">
+        {
+          footerNav.map((item, i) => (
+            <li class:list={[i >= 4 && "hidden lg:block"]}>
+              <a
+                href={item.href}
+                class="inline-flex min-h-11 items-center py-2.5 text-base text-white no-underline hover:text-sand-ink hover:underline lg:py-0 lg:font-medium"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex flex-col items-center gap-6 lg:flex-row lg:gap-10">
+      <a href={phoneHref} class="text-lg font-semibold text-sand-ink no-underline hover:text-white lg:text-base">
+        {phoneDisplay}
+      </a>
+      <span class="hidden lg:inline">{site.email}</span>
+      <span class="text-[15px] lg:hidden">Mon–Fri 7:00 am–5:30 pm<br />Sat by appointment</span>
+      <span class="hidden lg:inline">{site.hoursText}</span>
+    </div>
+
+    <p class="hidden text-[15px] lg:block">{site.areas.join(" · ")}</p>
+
+    <div class="h-px w-full bg-white/14"></div>
+
+    <div class="flex flex-col items-center gap-6 text-[13px] text-on-night-muted lg:gap-2.5 lg:text-sm">
+      <p>
+        © {year} {site.legalName}
+        <span class="hidden lg:inline">
+          {" · "}
+          <a href="/privacy/" class="text-on-night-muted underline hover:text-white">Privacy</a>
+          {" · "}
+          <a href="/accessibility/" class="text-on-night-muted underline hover:text-white">Accessibility</a>
+        </span>
+      </p>
+      <p class="max-w-2xl leading-normal text-sand-ink lg:leading-[normal]">
+        Concept site by {site.studio.name}. {site.name} is a fictional business; images are concept illustrations and
+        reviews are samples.
+      </p>
+    </div>
+  </Container>
+</footer>

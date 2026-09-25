@@ -1,6 +1,6 @@
 # Launch checklist
 
-Shared by every [Studio Name] client site. Do not edit in a client repo.
+Shared by every Perennial Studio client site. Do not edit in a client repo.
 Claude completes the items marked **(Claude)** on the launch branch and reports results.
 Items marked **(Owner)** are done by the studio owner. Copy this list into the launch pull
 request and tick items as they're done.

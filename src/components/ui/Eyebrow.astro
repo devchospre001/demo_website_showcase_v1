@@ -1,0 +1,18 @@
+---
+// Small uppercase label above a heading. Concept: 12px/.18em on phones, 14px/.2em on desktop.
+interface Props {
+  dark?: boolean;
+  class?: string;
+}
+const { dark = false, class: className } = Astro.props;
+---
+
+<p
+  class:list={[
+    "text-xs font-semibold tracking-[0.18em] uppercase lg:text-sm lg:tracking-[0.2em]",
+    dark ? "text-sand-ink" : "text-ink-muted",
+    className,
+  ]}
+>
+  <slot />
+</p>

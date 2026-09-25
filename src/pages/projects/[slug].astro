@@ -1,0 +1,80 @@
+---
+import type { GetStaticPaths } from "astro";
+import { Image } from "astro:assets";
+import { getCollection, getEntry, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CTABand from "../../components/sections/CTABand.astro";
+import PageHeader from "../../components/sections/PageHeader.astro";
+import Section from "../../components/ui/Section.astro";
+
+export const getStaticPaths = (async () => {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const service = await getEntry(project.data.service);
+const cover = project.data.images[0]!;
+const facts = [
+  { label: "Location", value: project.data.city },
+  { label: "Service", value: service?.data.title },
+  { label: "Size", value: project.data.size },
+  { label: "Timeline", value: project.data.duration },
+].filter((f) => f.value);
+---
+
+<BaseLayout
+  title={`${project.data.title}, ${project.data.city} | Coquina Stoneworks`}
+  description={project.data.summary}
+  preloadImage={cover.src.src}
+>
+  <PageHeader eyebrow={`Project · ${project.data.city}`} title={project.data.title} lead={project.data.summary} />
+  <Section>
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.6fr)] lg:gap-16">
+      <div class="flex flex-col gap-5">
+        {
+          project.data.before && (
+            <figure class="relative">
+              <Image src={project.data.before.src} alt={project.data.before.alt} class="aspect-4/3 w-full rounded-card object-cover" />
+              <figcaption class="absolute top-4 left-4 rounded bg-surface px-3 py-2 text-[0.8125rem] font-semibold tracking-[0.12em]">
+                BEFORE
+              </figcaption>
+            </figure>
+          )
+        }
+        {
+          project.data.images.map((img, i) => (
+            <figure class="relative">
+              <Image src={img.src} alt={img.alt} loading={i === 0 ? "eager" : "lazy"} class="aspect-4/3 w-full rounded-card object-cover" />
+              {project.data.before && i === 0 && (
+                <figcaption class="absolute top-4 left-4 rounded bg-accent px-3 py-2 text-[0.8125rem] font-semibold tracking-[0.12em] text-ink">
+                  AFTER
+                </figcaption>
+              )}
+            </figure>
+          ))
+        }
+        <p class="text-sm text-ink-muted">Concept illustration</p>
+      </div>
+      <div class="flex flex-col gap-6 lg:sticky lg:top-32 lg:self-start">
+        <h2 class="text-3xl">About this project</h2>
+        <dl class="grid grid-cols-2 gap-4 border-y border-border py-5 text-base">
+          {
+            facts.map((f) => (
+              <div class="flex flex-col gap-0.5">
+                <dt class="text-ink-muted">{f.label}</dt>
+                <dd class="font-semibold">{f.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="text-lg leading-[1.7] text-ink-soft">
+          <Content />
+        </div>
+        <a href="/projects/" class="inline-flex min-h-11 items-center font-semibold">Back to all projects</a>
+      </div>
+    </div>
+  </Section>
+  <CTABand title="Want something like this?" />
+</BaseLayout>

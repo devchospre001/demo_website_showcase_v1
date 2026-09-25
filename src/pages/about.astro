@@ -1,0 +1,76 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CTABand from "../components/sections/CTABand.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import ProcessSteps from "../components/sections/ProcessSteps.astro";
+import TrustBar from "../components/sections/TrustBar.astro";
+import Section from "../components/ui/Section.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
+import { site } from "../lib/site";
+import walkway from "../assets/images/walkway.svg";
+
+const values = [
+  {
+    title: "The ground comes first",
+    text: "We spend more time on excavation, grading and base than most crews spend on the whole job. It’s the part you never see and the reason our work doesn’t sink.",
+  },
+  {
+    title: "One crew, no hand-offs",
+    text: "The same people dig, build and seal your project. The owner lays out every job and walks it with you at the end.",
+  },
+  {
+    title: "Straight answers",
+    text: "One fixed, written price after the design visit. If we find something underground that changes the job, you hear it from us that day.",
+  },
+];
+---
+
+<BaseLayout
+  title="About Us | Coquina Stoneworks"
+  description="One crew, the owner on every job, and bases built to survive hurricane season. Hardscaping in St. Johns County since 2014."
+>
+  <PageHeader
+    eyebrow="Our story"
+    title="Built like the stone we’re named after."
+    lead={`${site.name} has built patios, outdoor kitchens and walls across St. Johns County since ${site.founded}.`}
+  />
+  <TrustBar />
+
+  <Section labelledby="why-title">
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+      <div class="flex flex-col gap-6">
+        <SectionHeader id="why-title" eyebrow="Why “Coquina”" title="A stone that’s outlasted 350 years of storms." />
+        <p class="max-w-prose text-[1.1875rem] leading-[1.7] text-ink-soft">
+          Coquina is a soft, porous stone made of millions of compressed shells, quarried on Anastasia Island.
+          Beginning in 1672, builders used it to raise the Castillo de San Marcos. The stone absorbs rather than
+          shatters, and the fort is still standing.
+        </p>
+        <p class="max-w-prose text-[1.1875rem] leading-[1.7] text-ink-soft">
+          We took the name as a standard: respect the ground, respect the weather, and build things that outlast us.
+        </p>
+      </div>
+      <figure class="flex flex-col gap-3">
+        <Image src={walkway} alt="Shellstone walkway leading through a planted front yard to a front door" class="aspect-4/3 w-full rounded-card object-cover" />
+        <figcaption class="text-sm text-ink-muted">Concept illustration</figcaption>
+      </figure>
+    </div>
+  </Section>
+
+  <Section bg="alt" labelledby="values-title">
+    <SectionHeader id="values-title" eyebrow="How we work" title="Three things we don’t compromise on" />
+    <ul class="mt-10 grid gap-6 md:grid-cols-3">
+      {
+        values.map((v) => (
+          <li class="flex flex-col gap-3 rounded-card bg-surface p-6 shadow-card md:p-8">
+            <h3 class="text-[1.75rem]">{v.title}</h3>
+            <p class="text-[1.0625rem] leading-relaxed text-ink-muted">{v.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <ProcessSteps />
+  <CTABand />
+</BaseLayout>

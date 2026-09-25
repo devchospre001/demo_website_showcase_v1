@@ -1,0 +1,33 @@
+---
+import Eyebrow from "./Eyebrow.astro";
+
+// Eyebrow + h2 (+ optional action slot on the right on desktop). Used on inner pages;
+// home-page sections spell out the concept's exact spacing themselves.
+interface Props {
+  eyebrow: string;
+  title: string;
+  id?: string;
+  dark?: boolean;
+  center?: boolean;
+  size?: "lg" | "md";
+}
+
+const { eyebrow, title, id, dark = false, center = false, size = "lg" } = Astro.props;
+const hasAction = Astro.slots.has("action");
+---
+
+<div
+  class:list={[
+    "flex flex-col gap-5",
+    hasAction && "lg:flex-row lg:items-end lg:justify-between",
+    center && "lg:items-center lg:text-center",
+  ]}
+>
+  <div class="flex max-w-3xl flex-col gap-4">
+    <Eyebrow dark={dark}>{eyebrow}</Eyebrow>
+    <h2 id={id} class:list={["text-4xl leading-[1.05]", size === "lg" ? "lg:text-[56px]" : "lg:text-5xl"]}>
+      {title}
+    </h2>
+  </div>
+  {hasAction && <slot name="action" />}
+</div>

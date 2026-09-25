@@ -18,8 +18,7 @@ Context for a new session. Read this first, then `CLAUDE.md` and `docs/`.
   Outscraper/Apify for leads, Instantly for sending, low volume per inbox.
 - Payments on client sites: usually none. Embed the client's Jobber/Housecall Pro form;
   Stripe in the client's own name only for fixed-price services; hosted payment pages only.
-- Studio name: not decided yet. Ideas so far: Perennial Studio, Plotline, Stepstone Studio,
-  Loam, Trowel & Type, Live Oak Studio. Placeholder in docs: `[Studio Name]`.
+- Studio name: **Perennial Studio** (decided 2026-09-24).
 - Later: Instagram/TikTok marketing with Higgsfield.
 
 ## Tech decisions (settled; details in CLAUDE.md and docs/)
@@ -43,44 +42,47 @@ Context for a new session. Read this first, then `CLAUDE.md` and `docs/`.
 - `docs/architecture.md`, `docs/design-system.md`, `docs/launch-checklist.md`
 - `docs/brief.md`, `docs/spec.md` (templates)
 
-## Next task: starter repo + 3 concept sites
+## Next task: build the Coquina Stoneworks demo site (this folder)
 
-Goal: three polished sites for fictional landscaping businesses, used in proposals and in
-the studio portfolio.
+This folder is ONE demo website, not a starter template or boilerplate. It is a concept
+site for a fictional business, used in proposals and in the studio portfolio.
 
-Build order:
+- Business: Coquina Stoneworks, hardscaping specialist (patios, retaining walls,
+  outdoor kitchens), serving St. Augustine, FL and St. Johns County.
+- Look: premium, stone tones.
+- Built with the stack and rules in `CLAUDE.md` and `docs/`, deployed to a preview URL.
+- `docs/brief.md` and `docs/spec.md` get filled in for Coquina Stoneworks first
+  (fictional content allowed under the demo mode rules below).
 
-1. Starter repo (the template): Astro project with configs, tokens, `ui/` components,
-   section library, tests and scripts exactly as the docs describe.
-2. Three concept sites created from the starter, each with its own brief, spec and token
-   set, deployed to preview URLs.
+Other concepts, for later and in their own folders: Brightblade Lawn & Landscape
+(Greenville, SC) and Sable Grove Outdoor Living (Atlanta, GA).
 
-Suggested variety, to show range (confirm in the new session):
-
-1. Hardscaping specialist: patios, retaining walls, outdoor kitchens. Premium, stone tones.
-2. Lawn and landscape maintenance: recurring service plans. Fresh, friendly, bright.
-3. Outdoor living design-build: high-end projects. Dark, editorial, photo-led.
-
-### Demo mode rules (concept sites only; add to each concept repo's CLAUDE.md)
+### Demo mode rules (concept sites only; also in this folder's CLAUDE.md)
 
 - The business is fictional. Invent names that don't match real local companies.
 - Sample reviews, stats and copy are allowed but must be plausible and never attributed
   to real people.
 - Phone numbers use the fictional range 555-0100 to 555-0199.
-- Footer shows "Concept site by [Studio Name]" on every page.
+- Footer shows "Concept site by Perennial Studio" on every page.
 - Images: free-to-use licensed stock photos (check each license) or AI-generated images,
   disclosed as concept imagery.
 - In proposals and the portfolio, label them as concept sites, not client work.
 
-### Open decisions for the new session
+### Decided (2026-09-24)
 
-- Image source for concept sites (stock vs AI-generated).
-- Fictional business names and the cities they "serve".
-- Whether to register a studio domain before publishing the portfolio.
+- Images for concept sites: AI-generated, disclosed as concept imagery.
+- Fictional businesses (web-searched 2026-09-24, no matching real company found):
+  1. Coquina Stoneworks: hardscaping, St. Augustine, FL (St. Johns County).
+  2. Brightblade Lawn & Landscape: maintenance plans, Greenville, SC.
+  3. Sable Grove Outdoor Living: design-build, Atlanta, GA (Buckhead, Sandy Springs).
+- Studio domain: not registering anything now.
+- Studio name: **Perennial Studio** (owner's pick). Note: other design/architecture
+  studios use "Perennial Studio"; check domain availability and a trademark search
+  before registering.
 
 ## Kickoff prompt for the new session
 
-> Read HANDOFF.md, CLAUDE.md and everything in docs/. Then build the starter repo exactly
-> as the docs describe. Work step by step: propose the plan first, ask before adding any
-> package, and end each step with test instructions I can run myself. After the starter
-> works, we'll create the three concept sites.
+> Read HANDOFF.md, CLAUDE.md and everything in docs/. This folder is the Coquina
+> Stoneworks demo website. First draft docs/brief.md and docs/spec.md for it, then build
+> the site. Work step by step: propose the plan first, ask before adding any package, and
+> end each step with test instructions I can run myself.

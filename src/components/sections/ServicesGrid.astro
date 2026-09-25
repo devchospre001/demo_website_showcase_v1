@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import Card from "../ui/Card.astro";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Icon from "../ui/Icon.astro";
+import Section from "../ui/Section.astro";
+
+interface Props {
+  bg?: "surface" | "alt";
+  showAllLink?: boolean;
+}
+
+const { bg = "alt", showAllLink = true } = Astro.props;
+const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Section id="services" bg={bg} labelledby="services-title">
+  <div class="flex flex-col gap-5 lg:gap-12">
+    <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+      <div class="flex flex-col gap-5 lg:gap-4">
+        <Eyebrow>What we build</Eyebrow>
+        <h2 id="services-title" class="text-4xl leading-[1.05] lg:text-[56px]">Four things, done properly.</h2>
+      </div>
+      {
+        showAllLink && (
+          <a href="/services/" class="hidden items-center gap-2 text-[17px] font-semibold underline lg:inline-flex">
+            All services
+            <Icon name="arrow" size={18} />
+          </a>
+        )
+      }
+    </div>
+    <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+      {
+        services.map((s) => (
+          <li class="flex">
+            <Card
+              href={`/services/${s.id}/`}
+              image={s.data.heroImage}
+              imageAlt={s.data.heroAlt}
+              title={s.data.title}
+              summary={s.data.summary}
+              summaryMobile={`${s.data.shortSummary} Typical ${s.data.price}.`}
+              meta={`Typical project ${s.data.price}`}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Section>

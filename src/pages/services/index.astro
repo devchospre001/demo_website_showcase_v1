@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CTABand from "../../components/sections/CTABand.astro";
+import PageHeader from "../../components/sections/PageHeader.astro";
+import ProcessSteps from "../../components/sections/ProcessSteps.astro";
+import ServicesGrid from "../../components/sections/ServicesGrid.astro";
+---
+
+<BaseLayout
+  title="Hardscaping Services in St. Johns County | Coquina Stoneworks"
+  description="Paver patios, outdoor kitchens, retaining walls and pool decks, built on a base made for Florida weather."
+>
+  <PageHeader
+    eyebrow="Services"
+    title="What we build"
+    lead="Four kinds of work, done by one crew. Every project starts with a free on-site design visit and a 3D design."
+  />
+  <ServicesGrid bg="surface" showAllLink={false} />
+  <ProcessSteps bg="alt" />
+  <CTABand />
+</BaseLayout>

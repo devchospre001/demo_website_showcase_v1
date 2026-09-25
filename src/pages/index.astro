@@ -1,0 +1,52 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BeforeAfter from "../components/sections/BeforeAfter.astro";
+import FAQ from "../components/sections/FAQ.astro";
+import FeaturedProjects from "../components/sections/FeaturedProjects.astro";
+import Hero from "../components/sections/Hero.astro";
+import ProcessSteps from "../components/sections/ProcessSteps.astro";
+import QuoteSection from "../components/sections/QuoteSection.astro";
+import Reviews from "../components/sections/Reviews.astro";
+import ServiceAreas from "../components/sections/ServiceAreas.astro";
+import ServicesGrid from "../components/sections/ServicesGrid.astro";
+import Story from "../components/sections/Story.astro";
+import TrustBar from "../components/sections/TrustBar.astro";
+import Section from "../components/ui/Section.astro";
+import hero from "../assets/images/hero.svg";
+
+// Section order and content follow the approved concept design canvas.
+const beforeAfter = await getEntry("projects", "backyard-patio-st-augustine");
+const faqs = (await getCollection("faq", (f) => f.data.home)).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Paver Patios & Outdoor Kitchens in St. Augustine, FL | Coquina Stoneworks"
+  description="Patios, outdoor kitchens, retaining walls and pool decks built for Florida weather. Serving St. Johns County. Get a free quote."
+  preloadImage={hero.src}
+>
+  <Hero
+    eyebrow="Hardscaping · St. Johns County, FL"
+    title="Stonework built for Florida weather."
+    lead="Patios, outdoor kitchens, retaining walls and pool decks, set on a base that stands up to summer storms. Designed in 3D before we dig. Built by one crew, with the owner on site."
+    leadMobile="Patios, outdoor kitchens, walls and pool decks on a base that stands up to summer storms."
+    image={hero}
+    imageAlt="Travertine patio at dusk with a stone fire pit, lounge chairs, string lights and a pergola-covered outdoor kitchen"
+  />
+  <TrustBar />
+  <Story />
+  <ServicesGrid />
+  <FeaturedProjects />
+  {beforeAfter && <BeforeAfter project={beforeAfter} />}
+  <ProcessSteps />
+  <Reviews />
+
+  <Section id="faq" labelledby="faq-title" class="scroll-mt-24" containerClass="grid lg:grid-cols-2 lg:gap-24">
+    <div class="hidden lg:block">
+      <ServiceAreas />
+    </div>
+    <FAQ items={faqs} />
+  </Section>
+
+  <QuoteSection />
+</BaseLayout>

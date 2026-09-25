@@ -1,0 +1,48 @@
+---
+import Eyebrow from "../ui/Eyebrow.astro";
+import Section from "../ui/Section.astro";
+
+// Concept: phones show a left-aligned list with short copy; desktop shows four centered columns.
+interface Props {
+  bg?: "surface" | "alt";
+}
+const { bg = "surface" } = Astro.props;
+
+const steps = [
+  { title: "Tell us the idea", text: "Call or send the form. We call back within one business day.", short: "We call back within one business day." },
+  { title: "On-site design visit", text: "We measure, check drainage and talk through how you’ll use the space.", short: "We measure and check drainage." },
+  { title: "3D design, fixed price", text: "See it before we dig. One written price, no surprise change orders.", short: "See it before we dig." },
+  { title: "Build & walkthrough", text: "One crew, usually 1–3 weeks. We seal, clean up and walk it with you.", short: "One crew, usually 1–3 weeks." },
+];
+---
+
+<Section bg={bg} labelledby="process-title">
+  <div class="flex flex-col gap-5 lg:gap-14">
+    <div class="flex flex-col gap-5 lg:items-center lg:gap-4 lg:text-center">
+      <Eyebrow>How it works</Eyebrow>
+      <h2 id="process-title" class="text-4xl leading-[1.05] lg:text-[56px]">From first call to first cookout</h2>
+    </div>
+    <ol class="flex flex-col gap-[18px] lg:grid lg:grid-cols-4 lg:gap-8">
+      {
+        steps.map((step, i) => (
+          <li class="flex gap-4 lg:flex-col lg:gap-3.5">
+            <span
+              class:list={[
+                "flex size-11 shrink-0 items-center justify-center rounded-full font-heading text-[22px] font-bold lg:size-14 lg:text-[26px]",
+                i === steps.length - 1 ? "bg-brand text-on-brand" : "border border-border bg-surface-alt text-brand",
+              ]}
+              aria-hidden="true"
+            >
+              {i + 1}
+            </span>
+            <div class="flex flex-col gap-0.5 lg:gap-3.5">
+              <h3 class="font-body text-[17px] font-semibold lg:font-heading lg:text-[28px]">{step.title}</h3>
+              <p class="text-base leading-normal text-ink-muted lg:hidden">{step.short}</p>
+              <p class="hidden text-[17px] leading-[1.6] text-ink-muted lg:block">{step.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Section>

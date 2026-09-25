@@ -1,0 +1,31 @@
+---
+import Container from "./Container.astro";
+
+// Every page section: vertical rhythm plus alternating backgrounds.
+interface Props {
+  id?: string;
+  bg?: "surface" | "alt" | "brand" | "night";
+  class?: string;
+  containerClass?: string;
+  labelledby?: string;
+}
+
+const { id, bg = "surface", class: className, containerClass, labelledby } = Astro.props;
+
+const backgrounds = {
+  surface: "bg-surface text-ink",
+  alt: "bg-surface-alt text-ink",
+  brand: "on-dark bg-brand text-on-brand",
+  night: "on-dark bg-night-2 text-on-brand",
+};
+---
+
+<section
+  id={id}
+  aria-labelledby={labelledby}
+  class:list={["py-(--section-y)", backgrounds[bg], className]}
+>
+  <Container class={containerClass}>
+    <slot />
+  </Container>
+</section>

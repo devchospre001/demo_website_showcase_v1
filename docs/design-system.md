@@ -1,6 +1,6 @@
 # Design system
 
-Shared by every [Studio Name] client site. Do not edit in a client repo.
+Shared by every Perennial Studio client site. Do not edit in a client repo.
 A client's own values (colors, fonts) go in the `@theme` block and are recorded in the
 "Design tokens" section of `docs/spec.md`.
 

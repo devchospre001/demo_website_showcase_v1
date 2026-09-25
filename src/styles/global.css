@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+/* Coquina Stoneworks tokens. Values match the approved concept design canvas
+   ("Coquina Stoneworks — Concept Design") and are recorded in docs/spec.md section 6.
+   Components use these tokens only; re-branding means editing this block. */
+@theme {
+  /* Color: roles */
+  --color-brand: #4A3F35;          /* dark umber: primary actions, links */
+  --color-brand-strong: #352C24;   /* hover/active state of brand */
+  --color-on-brand: #FFFFFF;       /* text/icons on brand backgrounds */
+  --color-accent: #C9A97A;         /* coquina sand: fills, stars, highlights on dark */
+  --color-accent-ink: #8A6F4B;     /* sand-toned numerals on light (large bold text only) */
+  --color-ink: #1F1C18;            /* body text */
+  --color-ink-soft: #3A342D;       /* long-form paragraphs */
+  --color-ink-muted: #5A5249;      /* secondary text */
+  --color-surface: #FBF9F5;        /* page background */
+  --color-surface-alt: #F2ECE2;    /* alternating sections, cards */
+  --color-border: #DCD2C3;         /* decorative dividers */
+  --color-field: #8C7F6D;          /* form control borders (3:1 non-text contrast) */
+  --color-night: #231E19;          /* utility bar, footer */
+  --color-night-2: #2B2520;        /* quote section */
+  --color-scrim: #181410;          /* photo overlays */
+  --color-on-night: #D9CFBF;       /* body text on night */
+  --color-on-night-muted: #BFB3A3; /* small print on night */
+  --color-sand-ink: #E7D3B0;       /* eyebrows and highlights on dark backgrounds */
+  --color-on-photo: #F1EBE1;       /* paragraphs over photos */
+  --color-on-photo-muted: #E9E1D4; /* small text over photos */
+  --color-success: #2E7D4F;
+  --color-danger: #B3261E;
+
+  /* Shape and depth */
+  --radius-button: 6px;
+  --radius-card: 8px;
+  --radius-form: 10px;
+  --shadow-card: 0 1px 2px rgb(31 28 24 / 0.06), 0 4px 12px rgb(31 28 24 / 0.06);
+  --shadow-float: 0 20px 50px rgb(0 0 0 / 0.3);
+}
+
+/* Fonts come from Astro's <Font> component, which defines these variables. */
+@theme inline {
+  --font-heading: var(--font-cormorant);
+  --font-body: var(--font-instrument);
+}
+
+:root {
+  /* Layout tokens used by the Container and Section components.
+     Concept: 16px side padding on phones, 64px on desktop, content max 1312px. */
+  --container-max: 90rem;
+  --gutter: 1rem;
+  --section-y: 3.5rem;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 2rem;
+    --section-y: 5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --gutter: 4rem;
+    --section-y: 7rem;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem; /* keeps anchored headings clear of the sticky header */
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Concept: 16px body text, browser-normal line height; components set their own. */
+  body {
+    @apply bg-surface text-ink font-body text-base leading-[normal] antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-heading font-semibold;
+  }
+
+  a {
+    @apply text-brand;
+  }
+
+  a:hover {
+    @apply text-brand-strong;
+  }
+
+  :focus-visible {
+    @apply outline-3 outline-offset-2 outline-brand;
+  }
+
+  summary {
+    @apply cursor-pointer list-none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Focus rings stay visible on dark backgrounds */
+  .on-dark :focus-visible {
+    @apply outline-accent;
+  }
+}

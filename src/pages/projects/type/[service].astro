@@ -1,0 +1,32 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import CTABand from "../../../components/sections/CTABand.astro";
+import PageHeader from "../../../components/sections/PageHeader.astro";
+import ProjectFilters from "../../../components/sections/ProjectFilters.astro";
+import ProjectGallery from "../../../components/sections/ProjectGallery.astro";
+import Section from "../../../components/ui/Section.astro";
+
+export const getStaticPaths = (async () => {
+  const services = await getCollection("services");
+  return services.map((service) => ({ params: { service: service.id }, props: { service } }));
+}) satisfies GetStaticPaths;
+
+const { service } = Astro.props;
+const projects = (await getCollection("projects", (p) => p.data.service.id === service.id)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const lead = `${service.data.title} we’ve built across St. Johns County.`;
+---
+
+<BaseLayout title={`${service.data.title} Projects | Coquina Stoneworks`} description={lead}>
+  <PageHeader eyebrow="Projects" title={service.data.title} lead={lead}>
+    <div class="mt-2"><ProjectFilters highlight={service.id} /></div>
+  </PageHeader>
+  <Section>
+    <h2 class="sr-only">{service.data.title} projects</h2>
+    <ProjectGallery projects={projects} />
+  </Section>
+  <CTABand />
+</BaseLayout>

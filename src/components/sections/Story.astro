@@ -1,0 +1,74 @@
+---
+import { Image } from "astro:assets";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Icon from "../ui/Icon.astro";
+import Section from "../ui/Section.astro";
+import walkway from "../../assets/images/walkway.svg";
+
+// Concept: phones show one condensed paragraph and the photo; desktop adds the link and three principles.
+const principles = [
+  {
+    title: "Base first",
+    text: "Six inches of compacted, graded base under every paver, so rain drains away and nothing sinks after the first storm.",
+  },
+  {
+    title: "Made for salt and sun",
+    text: "Travertine and shellstone that stay cool underfoot, resist salt air and don’t fade by the second summer.",
+  },
+  {
+    title: "One crew, start to finish",
+    text: "No subcontractor hand-offs. The owner lays out every job and walks it with you after the final seal.",
+  },
+];
+---
+
+<Section id="story" labelledby="story-title" class="scroll-mt-24">
+  <div class="flex flex-col gap-[72px]">
+    <div class="grid gap-[18px] lg:grid-cols-2 lg:items-center lg:gap-20">
+      <div class="flex flex-col gap-[18px] lg:gap-6">
+        <Eyebrow>Why “Coquina”</Eyebrow>
+        <h2 id="story-title" class="text-4xl leading-[1.05] lg:text-[56px]">Named after the stone that built St. Augustine.</h2>
+        <p class="text-[17px] leading-[1.65] text-ink-soft lg:hidden">
+          In 1672, builders began quarrying coquina, a stone of compressed shells, to raise the Castillo de San
+          Marcos. Three centuries of storms later, it’s still standing. We build every backyard with the same
+          respect for the ground and the weather.
+        </p>
+        <p class="hidden text-[19px] leading-[1.7] text-ink-soft lg:block">
+          In 1672, builders began quarrying coquina, a stone made of millions of compressed shells, to raise the
+          Castillo de San Marcos. More than three centuries of storms, sieges and salt air later, it’s still
+          standing.
+        </p>
+        <p class="hidden text-[19px] leading-[1.7] text-ink-soft lg:block">
+          That’s how we think about every backyard: start with the ground, respect the weather, and build it to
+          outlast us.
+        </p>
+        <a href="/about/" class="hidden items-center gap-2 self-start text-[17px] font-semibold underline lg:inline-flex">
+          Meet the crew
+          <Icon name="arrow" size={18} />
+        </a>
+      </div>
+      <figure class="mt-2 flex flex-col gap-[18px] lg:mt-0 lg:gap-3">
+        <Image
+          src={walkway}
+          alt="Shellstone walkway leading through a planted front yard to a front door"
+          class="block h-[260px] w-full rounded-card object-cover lg:h-[520px]"
+        />
+        <figcaption class="text-[13px] text-ink-muted lg:text-sm">Shellstone entry walk, Fruit Cove · Concept illustration</figcaption>
+      </figure>
+    </div>
+
+    <ol class="hidden grid-cols-3 gap-10 border-t border-border pt-12 lg:grid">
+      {
+        principles.map((p, i) => (
+          <li class="flex flex-col gap-3">
+            <span class="font-heading text-[22px] font-bold text-accent-ink" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <h3 class="text-[30px]">{p.title}</h3>
+            <p class="text-[17px] leading-[1.65] text-ink-muted">{p.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Section>

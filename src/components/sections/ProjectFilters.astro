@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+
+// Filter chips: each is a real page, so filtering works without JS.
+// `highlight` marks the selected chip; `markCurrent` adds aria-current only on the /projects/ pages.
+interface Props {
+  highlight?: string; // service id, or undefined for "All"
+  markCurrent?: boolean;
+}
+const { highlight, markCurrent = true } = Astro.props;
+const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+const shortNames: Record<string, string> = {
+  "paver-patios": "Patios",
+  "outdoor-kitchens": "Outdoor kitchens",
+  "retaining-walls": "Walls",
+  "pool-decks": "Pool decks",
+};
+const links = [
+  { label: "All", href: "/projects/", id: undefined as string | undefined },
+  ...services.map((s) => ({ label: shortNames[s.id] ?? s.data.title, href: `/projects/type/${s.id}/`, id: s.id as string | undefined })),
+];
+const base = "inline-flex h-11 items-center rounded-full px-[18px] text-[15px] font-medium no-underline";
+---
+
+<nav aria-label="Filter projects by service">
+  <ul class="flex flex-wrap gap-2">
+    {
+      links.map((l) => {
+        const on = l.id === highlight;
+        return (
+          <li>
+            <a
+              href={l.href}
+              aria-current={on && markCurrent ? "page" : undefined}
+              class:list={[
+                base,
+                on ? "bg-brand text-on-brand hover:text-on-brand" : "border border-border text-ink hover:border-brand hover:text-brand",
+              ]}
+            >
+              {l.label}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>

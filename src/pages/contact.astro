@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import QuoteForm from "../components/sections/QuoteForm.astro";
+import ServiceAreas from "../components/sections/ServiceAreas.astro";
+import Icon from "../components/ui/Icon.astro";
+import Section from "../components/ui/Section.astro";
+import { phoneDisplay, phoneHref, site } from "../lib/site";
+---
+
+<BaseLayout
+  title="Get a Free Quote | Coquina Stoneworks"
+  description="Tell us about your project. We call back within one business day to book a free on-site design visit."
+>
+  <PageHeader
+    eyebrow="Free on-site design visit"
+    title="Get a free quote"
+    lead="Tell us a little about your project. We call back within one business day to book a visit."
+  />
+
+  <Section containerClass="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-20">
+    <div>
+      <h2 class="sr-only">Quote request form</h2>
+      <QuoteForm mobileCompact={false} />
+    </div>
+    <div class="flex flex-col gap-8">
+      <div class="flex flex-col gap-3">
+        <h2 class="text-3xl">Rather talk?</h2>
+        <a href={phoneHref} class="inline-flex min-h-11 items-center gap-2.5 font-heading text-4xl font-semibold text-brand no-underline">
+          <Icon name="phone" size={28} />
+          {phoneDisplay}
+        </a>
+        <p class="text-base text-ink-muted">{site.hoursText}</p>
+        <p class="text-base text-ink-muted">{site.email}</p>
+      </div>
+      <div class="rounded-card bg-surface-alt p-6 md:p-8">
+        <ServiceAreas headingId="contact-areas-title" />
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

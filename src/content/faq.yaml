@@ -1,0 +1,43 @@
+- id: patio-cost
+  question: How much does a paver patio cost?
+  answer: Most of our patios land between $12,000 and $45,000, depending on size, material and site prep. After the design visit you get one fixed, written price.
+  shortAnswer: Most land between $12,000 and $45,000. You get one fixed, written price after the design visit.
+  service: paver-patios
+  home: true
+  order: 1
+- id: timeline
+  question: How long does a project take?
+  answer: Most patios take one to two weeks on site, and outdoor kitchens two to four. We give you a start date and a schedule before we begin.
+  home: true
+  order: 2
+- id: permits
+  question: Do you handle permits and HOA approval?
+  answer: Yes. We prepare the drawings your HOA needs and pull any permits St. Johns County requires.
+  home: true
+  order: 3
+- id: materials
+  question: Travertine, shellstone or concrete pavers?
+  answer: Travertine stays coolest and ages well. Shellstone gives the classic local look. Concrete pavers cost less and suit driveways. We bring samples to the design visit.
+  service: paver-patios
+  home: true
+  order: 4
+- id: warranty
+  question: What does the 5-year warranty cover?
+  answer: Our workmanship. If pavers settle, shift or joints fail because of how we built it, we come back and fix it at no cost for five years.
+  home: true
+  order: 5
+- id: kitchen-utilities
+  question: Do you run gas, water and electric for outdoor kitchens?
+  answer: We coordinate licensed plumbers and electricians and include their work in one price, so you deal with one company.
+  service: outdoor-kitchens
+  order: 6
+- id: wall-height
+  question: How tall can a retaining wall be without an engineer?
+  answer: Low garden and seating walls usually don't need one. Taller walls are engineered and permitted, and we handle both.
+  service: retaining-walls
+  order: 7
+- id: pool-overlay
+  question: Can you put pavers over my existing pool deck?
+  answer: Often, yes. If the concrete is sound, a paver overlay is faster and cheaper than tearing it out. We check it during the design visit.
+  service: pool-decks
+  order: 8

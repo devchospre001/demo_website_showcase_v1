@@ -1,0 +1,33 @@
+# DEMO: sample reviews written for the concept site. Initials only, never real people.
+- id: dana-r
+  author: Dana R.
+  city: St. Augustine Beach
+  rating: 5
+  text: They found a drainage problem two other contractors missed. Our patio hasn't held a puddle since.
+  service: paver-patios
+  date: 2026-05-02
+  source: Sample review
+- id: marcus-t
+  author: Marcus T.
+  city: Ponte Vedra Beach
+  rating: 5
+  text: The 3D design sold us. What they built matches it right down to where the grill sits.
+  service: outdoor-kitchens
+  date: 2026-06-10
+  source: Sample review
+- id: elena-jim-k
+  author: Elena & Jim K.
+  city: Nocatee
+  rating: 5
+  text: Our old pool deck burned our feet by noon. The travertine stays cool all afternoon.
+  service: pool-decks
+  date: 2026-04-01
+  source: Sample review
+- id: priya-s
+  author: Priya S.
+  city: World Golf Village
+  rating: 5
+  text: Our backyard was one big slope. Now it's two level spaces and the kids actually play out there.
+  service: retaining-walls
+  date: 2026-02-20
+  source: Sample review

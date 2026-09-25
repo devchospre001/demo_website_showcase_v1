@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Eyebrow from "../ui/Eyebrow.astro";
+
+// Native <details>/<summary>: no JS. Content block, no Section wrapper.
+// Concept: phones show the first three questions (with shorter answers where given).
+interface Props {
+  items: CollectionEntry<"faq">[];
+  headingId?: string;
+  title?: string;
+  mobileLimit?: number;
+}
+const { items, headingId = "faq-title", title = "Questions we hear a lot", mobileLimit = 3 } = Astro.props;
+---
+
+<div class="flex flex-col gap-4 lg:gap-6">
+  <Eyebrow>FAQ</Eyebrow>
+  <h2 id={headingId} class="text-4xl leading-[1.05] lg:text-5xl">{title}</h2>
+  <div class="border-t border-border">
+    {
+      items.map((item, i) => (
+        <details class:list={["group border-b border-border py-3.5 lg:py-5", i >= mobileLimit && "max-lg:hidden"]} open={i === 0}>
+          <summary class="flex min-h-11 items-center justify-between gap-3 text-[17px] font-semibold lg:text-[19px]">
+            {item.data.question}
+            <span class="text-2xl leading-none text-brand lg:text-[26px]" aria-hidden="true">
+              <span class="group-open:hidden">+</span>
+              <span class="hidden group-open:inline">−</span>
+            </span>
+          </summary>
+          {item.data.shortAnswer ? (
+            <>
+              <p class="mt-2 text-base leading-[1.6] text-ink-muted lg:hidden">{item.data.shortAnswer}</p>
+              <p class="mt-3 hidden text-[17px] leading-[1.65] text-ink-muted lg:block">{item.data.answer}</p>
+            </>
+          ) : (
+            <p class="mt-2 text-base leading-[1.6] text-ink-muted lg:mt-3 lg:text-[17px] lg:leading-[1.65]">{item.data.answer}</p>
+          )}
+        </details>
+      ))
+    }
+  </div>
+</div>

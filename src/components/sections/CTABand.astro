@@ -1,0 +1,30 @@
+---
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Icon from "../ui/Icon.astro";
+import { phoneDisplay, phoneHref, quoteHref } from "../../lib/site";
+
+// Full-width closing call to action for inner pages.
+interface Props {
+  title?: string;
+}
+const { title = "Tell us about your backyard." } = Astro.props;
+---
+
+<section aria-labelledby="cta-title" class="on-dark bg-brand py-(--section-y) text-on-brand">
+  <Container class="flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
+    <div class="flex max-w-2xl flex-col gap-4">
+      <Eyebrow dark>Free on-site design visit</Eyebrow>
+      <h2 id="cta-title" class="text-4xl leading-[1.05] md:text-[3.5rem]">{title}</h2>
+      <p class="text-lg text-on-night">We call back within one business day.</p>
+    </div>
+    <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+      <Button href={quoteHref} variant="sand" size="lg">
+        Get a free quote
+        <Icon name="arrow" size={18} />
+      </Button>
+      <Button href={phoneHref} variant="outline-light" size="lg">Call {phoneDisplay}</Button>
+    </div>
+  </Container>
+</section>

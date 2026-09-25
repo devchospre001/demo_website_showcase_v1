@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import Section from "../components/ui/Section.astro";
+import { site } from "../lib/site";
+---
+
+<BaseLayout title={`Privacy | ${site.name}`} description={`How ${site.name} handles your information.`}>
+  <PageHeader eyebrow="Privacy" title="Privacy" lead="Short version: this concept site collects nothing." />
+  <Section>
+    <div class="flex max-w-prose flex-col gap-5 text-lg leading-[1.7] text-ink-soft">
+      <p>
+        {site.name} is a fictional business on a concept site by {site.studio.name}. The quote form doesn’t send or
+        store anything, and the site uses no cookies, analytics or tracking.
+      </p>
+      <p>
+        On a real client site, this page explains what the quote form collects, where it goes (for example the
+        company’s scheduling software), how long it’s kept and how to ask for it to be deleted.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>

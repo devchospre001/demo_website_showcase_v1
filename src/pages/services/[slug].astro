@@ -1,0 +1,79 @@
+---
+import type { GetStaticPaths } from "astro";
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CTABand from "../../components/sections/CTABand.astro";
+import FAQ from "../../components/sections/FAQ.astro";
+import PageHeader from "../../components/sections/PageHeader.astro";
+import ProjectGallery from "../../components/sections/ProjectGallery.astro";
+import Button from "../../components/ui/Button.astro";
+import Section from "../../components/ui/Section.astro";
+import SectionHeader from "../../components/ui/SectionHeader.astro";
+import { phoneDisplay, phoneHref, quoteHref } from "../../lib/site";
+
+export const getStaticPaths = (async () => {
+  const services = await getCollection("services");
+  return services.map((service) => ({ params: { slug: service.id }, props: { service } }));
+}) satisfies GetStaticPaths;
+
+const { service } = Astro.props;
+const { Content } = await render(service);
+const projects = await getCollection("projects", (p) => p.data.service.id === service.id);
+const faqs = (await getCollection("faq", (f) => f.data.service?.id === service.id)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout title={service.data.seoTitle} description={service.data.seoDescription} preloadImage={service.data.heroImage.src}>
+  <PageHeader eyebrow="Services" title={service.data.title} lead={service.data.summary}>
+    <p class="text-base font-semibold text-ink-muted">Typical project {service.data.price}</p>
+  </PageHeader>
+
+  <Section>
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-20">
+      <div
+        class="flex max-w-prose flex-col gap-5 text-lg leading-[1.7] text-ink-soft [&_h2]:mt-6 [&_h2]:text-3xl [&_h2]:text-ink md:[&_h2]:text-4xl [&_li]:ml-5 [&_li]:list-disc [&_li]:pl-1 [&_strong]:text-ink [&_ul]:flex [&_ul]:flex-col [&_ul]:gap-2"
+      >
+        <Content />
+      </div>
+      <aside class="flex flex-col gap-5 lg:sticky lg:top-32 lg:self-start">
+        <Image
+          src={service.data.heroImage}
+          alt={service.data.heroAlt}
+          loading="eager"
+          class="aspect-3/2 w-full rounded-card object-cover"
+        />
+        <div class="flex flex-col gap-3 rounded-card bg-surface-alt p-6">
+          <p class="font-heading text-2xl font-semibold">Free on-site design visit</p>
+          <p class="text-base text-ink-muted">We measure, check drainage and show you a 3D design with one fixed price.</p>
+          <Button href={quoteHref} full>Get a free quote</Button>
+          <Button href={phoneHref} variant="secondary" full>Call {phoneDisplay}</Button>
+        </div>
+      </aside>
+    </div>
+  </Section>
+
+  {
+    projects.length > 0 && (
+      <Section bg="alt" labelledby="related-title">
+        <SectionHeader id="related-title" eyebrow="Recent work" title={`${service.data.title} we’ve built`} size="md" />
+        <div class="mt-10">
+          <ProjectGallery projects={projects} />
+        </div>
+      </Section>
+    )
+  }
+
+  {
+    faqs.length > 0 && (
+      <Section>
+        <div class="max-w-3xl">
+          <FAQ items={faqs} title={`${service.data.title}: common questions`} />
+        </div>
+      </Section>
+    )
+  }
+
+  <CTABand />
+</BaseLayout>

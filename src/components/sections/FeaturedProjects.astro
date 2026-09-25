@@ -1,0 +1,39 @@
+---
+import { getCollection } from "astro:content";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Icon from "../ui/Icon.astro";
+import Section from "../ui/Section.astro";
+import ProjectFilters from "./ProjectFilters.astro";
+import ProjectGallery from "./ProjectGallery.astro";
+
+// Home-page "Recent work" block from the concept.
+const all = await getCollection("projects");
+const featured = all
+  .filter((p) => p.data.featured && !p.data.before)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 5);
+---
+
+<Section id="projects" labelledby="projects-title" class="scroll-mt-24">
+  <div class="flex flex-col gap-4 lg:gap-10">
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div class="flex flex-col gap-4">
+        <Eyebrow>Recent work</Eyebrow>
+        <h2 id="projects-title" class="text-4xl leading-[1.05] lg:text-[56px]">Backyards across St. Johns County</h2>
+      </div>
+      <div class="hidden lg:block">
+        <ProjectFilters markCurrent={false} />
+      </div>
+    </div>
+    <ProjectGallery projects={featured} layout="featured" />
+    <div class="mt-1 flex justify-center lg:mt-0">
+      <a
+        href="/projects/"
+        class="inline-flex h-[52px] w-full items-center justify-center gap-2.5 rounded-button border-[1.5px] border-brand px-7 text-base font-semibold text-brand no-underline hover:bg-brand hover:text-on-brand lg:w-auto"
+      >
+        See all {all.length} projects
+        <Icon name="arrow" size={18} class="hidden lg:block" />
+      </a>
+    </div>
+  </div>
+</Section>

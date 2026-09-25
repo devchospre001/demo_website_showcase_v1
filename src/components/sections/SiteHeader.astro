@@ -1,0 +1,128 @@
+---
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import Icon from "../ui/Icon.astro";
+import Logo from "../ui/Logo.astro";
+import { nav, phoneDisplay, phoneHref, quoteHref, site } from "../../lib/site";
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => !href.includes("#") && path.startsWith(href);
+---
+
+<!-- Utility bar: desktop only (concept: 40px, 14px text) -->
+<div class="on-dark hidden bg-night text-sm text-on-night lg:block">
+  <Container class="flex h-10 items-center justify-between">
+    <p class="flex items-center gap-2">
+      <Icon name="pin" size={16} />
+      <span>Serving {site.areas[0]}, {site.areas[2]} &amp; all of St. Johns County</span>
+    </p>
+    <p class="flex gap-6">
+      <span>{site.hoursText}</span>
+      <span class="text-accent">Free on-site design visits</span>
+    </p>
+  </Container>
+</div>
+
+<header class="group/header sticky top-0 z-40 border-b border-border bg-surface">
+  <Container class="relative flex h-[68px] items-center justify-between gap-6 lg:h-[88px]">
+    <Logo />
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex gap-9">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? "page" : undefined}
+                class="inline-flex min-h-11 items-center text-base font-medium text-ink no-underline decoration-accent decoration-2 underline-offset-8 hover:text-ink hover:underline aria-[current=page]:underline"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2 lg:gap-5">
+      <a
+        href={phoneHref}
+        class="hidden min-h-11 items-center gap-2 text-base font-semibold text-ink no-underline hover:text-brand sm:flex"
+      >
+        <Icon name="phone" size={18} />
+        {phoneDisplay}
+      </a>
+      <a
+        href={phoneHref}
+        class="flex size-11 items-center justify-center rounded-button border border-border text-brand group-has-[details[open]]/header:hidden sm:hidden"
+      >
+        <Icon name="phone" label={`Call ${phoneDisplay}`} />
+      </a>
+      <Button href={quoteHref} class="hidden sm:inline-flex">Get a free quote</Button>
+
+      <details class="group lg:hidden" data-mobile-menu>
+        <summary
+          class="flex size-11 items-center justify-center rounded-button border border-brand bg-brand text-on-brand group-open:border-border group-open:bg-transparent group-open:text-ink"
+        >
+          <Icon name="menu" size={22} class="group-open:hidden" />
+          <Icon name="close" size={22} class="hidden group-open:block" />
+          <span class="sr-only">Menu</span>
+        </summary>
+        <div class="absolute inset-x-0 top-full flex h-[calc(100dvh-68px)] flex-col overflow-y-auto border-t border-border bg-surface">
+          <nav aria-label="Mobile" class="px-(--gutter) py-3">
+            <ul>
+              {
+                nav.map((item) => (
+                  <li class="border-b border-border">
+                    <a
+                      href={item.href}
+                      aria-current={isCurrent(item.href) ? "page" : undefined}
+                      class="flex min-h-15 items-center justify-between font-heading text-[30px] font-semibold text-ink no-underline"
+                    >
+                      {item.label}
+                      <Icon name="chevron" class="text-brand" />
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+          <div class="flex flex-col gap-3 px-(--gutter) py-5">
+            <Button href={quoteHref} size="lg" full>Get a free quote</Button>
+            <Button href={phoneHref} variant="secondary" size="lg" full>
+              <Icon name="phone" size={18} />
+              Call {phoneDisplay}
+            </Button>
+          </div>
+          <div class="mt-auto flex flex-col gap-1.5 bg-surface-alt px-(--gutter) pt-5 pb-7 text-[15px] text-ink-muted">
+            <p class="font-semibold text-ink">{site.hoursText}</p>
+            <p>{site.areas.join(" · ")}</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </Container>
+</header>
+
+<script>
+  // Progressive enhancement for the <details> mobile menu: Esc closes it and returns focus,
+  // following a link closes it. Without JS the menu still opens and closes natively.
+  document.querySelectorAll<HTMLDetailsElement>("[data-mobile-menu]").forEach((menu) => {
+    const summary = menu.querySelector("summary");
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        summary?.focus();
+      }
+    });
+    menu.querySelectorAll("a").forEach((link) =>
+      link.addEventListener("click", () => {
+        menu.open = false;
+      }),
+    );
+    window.matchMedia("(min-width: 64rem)").addEventListener("change", (e) => {
+      if (e.matches) menu.open = false;
+    });
+  });
+</script>

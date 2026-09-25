@@ -1,0 +1,33 @@
+---
+import Eyebrow from "../ui/Eyebrow.astro";
+import Icon from "../ui/Icon.astro";
+import { phoneDisplay, phoneHref, site } from "../../lib/site";
+
+// Content block (no Section wrapper) so pages can place it beside the FAQ or the form.
+interface Props {
+  headingId?: string;
+}
+const { headingId = "areas-title" } = Astro.props;
+---
+
+<div class="flex flex-col gap-4 lg:gap-6">
+  <Eyebrow>Where we work</Eyebrow>
+  <h2 id={headingId} class="text-4xl leading-[1.05] lg:text-5xl">St. Johns County, and nowhere else.</h2>
+  <p class="text-lg leading-[1.7] text-ink-soft">
+    Staying local means we’re never more than 40 minutes from your job, and we know how the soil behaves from the
+    beach to the St. Johns River.
+  </p>
+  <ul class="grid grid-cols-2 gap-3">
+    {
+      site.areas.map((area) => (
+        <li class="flex items-center gap-2.5 rounded-button bg-surface-alt px-4 py-3.5 text-[17px] font-medium">
+          <Icon name="pin" size={18} class="text-brand" />
+          {area}
+        </li>
+      ))
+    }
+  </ul>
+  <p class="text-base text-ink-muted">
+    Not sure we cover you? <a href={phoneHref} class="font-semibold underline">Call {phoneDisplay}</a>
+  </p>
+</div>

@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import Eyebrow from "../ui/Eyebrow.astro";
+import Section from "../ui/Section.astro";
+import { site } from "../../lib/site";
+
+// Concept: phones show one review under a "Reviews · 4.9 out of 5" label;
+// desktop shows three cards and the rating box.
+interface Props {
+  limit?: number;
+  bg?: "surface" | "alt";
+}
+const { limit = 3, bg = "alt" } = Astro.props;
+const reviews = (await getCollection("reviews")).slice(0, limit);
+const serviceNames: Record<string, string> = {
+  "paver-patios": "Patio",
+  "outdoor-kitchens": "Outdoor kitchen",
+  "retaining-walls": "Retaining wall",
+  "pool-decks": "Pool deck",
+};
+---
+
+<Section id="reviews" bg={bg} labelledby="reviews-title" class="scroll-mt-24">
+  <div class="flex flex-col gap-[18px] lg:gap-12">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between">
+      <Eyebrow class="lg:hidden">Reviews · {site.rating.value} out of 5</Eyebrow>
+      <div class="flex flex-col gap-4">
+        <Eyebrow class="hidden lg:block">Reviews</Eyebrow>
+        <h2 id="reviews-title" class="sr-only lg:not-sr-only lg:text-[56px] lg:leading-[1.05]">What homeowners say</h2>
+      </div>
+      <div class="hidden items-center gap-4 rounded-card border border-border bg-surface px-6 py-4 lg:flex">
+        <span class="font-heading text-5xl leading-none font-bold text-brand">{site.rating.value}</span>
+        <span class="flex flex-col gap-1 text-[15px] text-ink-muted">
+          <span class="font-semibold text-ink">out of 5</span>
+          <span>from {site.rating.count} Google reviews</span>
+        </span>
+      </div>
+    </div>
+
+    <ul class="grid gap-6 lg:grid-cols-3">
+      {
+        reviews.map((r, i) => (
+          <li class:list={["flex", i > 0 && "hidden lg:flex"]}>
+            <figure class="flex w-full flex-col gap-3.5 rounded-card bg-surface p-6 shadow-card lg:gap-5 lg:p-8">
+              <p class="text-sm font-semibold text-brand lg:text-[15px]">
+                <span aria-hidden="true">{"★".repeat(r.data.rating)} </span>
+                <span class="font-normal text-ink-muted">{r.data.rating} out of 5</span>
+              </p>
+              <blockquote class="font-heading text-2xl leading-[1.3] font-semibold lg:text-[25px] lg:leading-[1.35]">
+                <p>“{r.data.text}”</p>
+              </blockquote>
+              <figcaption class="border-t border-border pt-3 text-sm text-ink-muted lg:mt-auto lg:pt-4 lg:text-[15px]">
+                <strong class="text-ink">{r.data.author}</strong> · {r.data.city}<span class="hidden lg:inline"> · {serviceNames[r.data.service.id]}</span>
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="text-[13px] text-ink-muted lg:hidden">Sample review written for this concept site.</p>
+    <p class="hidden text-sm text-ink-muted lg:block">Sample reviews written for this concept site.</p>
+  </div>
+</Section>

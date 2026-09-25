@@ -1,0 +1,33 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+// Service card from the concept: whole card is one link.
+// Phones: 205px image, short copy with price. Desktop: 220px image, summary, price line.
+interface Props {
+  href: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  title: string;
+  summary: string;
+  summaryMobile: string;
+  meta: string;
+  headingLevel?: "h2" | "h3";
+}
+
+const { href, image, imageAlt, title, summary, summaryMobile, meta, headingLevel = "h3" } = Astro.props;
+const Heading = headingLevel;
+---
+
+<a
+  href={href}
+  class="group flex w-full flex-col overflow-hidden rounded-card bg-surface text-ink no-underline shadow-card transition-shadow hover:text-ink hover:shadow-lg"
+>
+  <Image src={image} alt={imageAlt} class="block h-[205px] w-full object-cover lg:h-[220px]" />
+  <div class="flex flex-col gap-1.5 px-5 py-[18px] lg:gap-2.5 lg:p-6">
+    <Heading class="text-[26px] lg:text-[28px]">{title}</Heading>
+    <p class="text-base leading-[1.55] text-ink-muted lg:hidden">{summaryMobile}</p>
+    <p class="hidden text-base leading-[1.6] text-ink-muted lg:block">{summary}</p>
+    <p class="mt-1 hidden border-t border-border pt-3 text-sm text-ink-muted lg:block">{meta}</p>
+  </div>
+</a>

@@ -1,0 +1,83 @@
+---
+import { getCollection } from "astro:content";
+import Button from "../ui/Button.astro";
+import { site } from "../../lib/site";
+
+// DEMO form (docs/spec.md, Tech notes). Inputs have no `name`, so nothing can be submitted.
+// With JS: the script validates, blocks the submit and announces the demo message.
+// Without JS: the form goes to /quote-demo/ with no data in the URL.
+// Concept: on phones the home-page form shows only Name, Phone and Project (`mobileCompact`).
+interface Props {
+  id?: string;
+  mobileCompact?: boolean;
+}
+const { id = "quote-form", mobileCompact = true } = Astro.props;
+const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+
+// Inputs stay 16px on phones so iOS doesn't zoom on focus; 15px on desktop as in the concept.
+const control =
+  "h-12 w-full rounded-button border border-field bg-white text-base font-normal text-ink lg:text-[15px]";
+const label = "flex flex-col gap-1.5 text-[15px] font-semibold text-ink";
+const phoneOnlyHidden = mobileCompact ? "max-lg:hidden" : "";
+---
+
+<form
+  id={id}
+  action="/quote-demo/"
+  method="get"
+  data-demo-form
+  aria-label="Request a free quote"
+  class="flex flex-col gap-3.5 rounded-form bg-surface p-5 text-ink lg:gap-[18px] lg:p-10 lg:shadow-float"
+>
+  <div class="grid gap-3.5 lg:grid-cols-2 lg:gap-4">
+    <label class={label}>
+      Name
+      <input type="text" autocomplete="name" required maxlength="80" class:list={[control, "px-3.5"]} />
+    </label>
+    <label class={label}>
+      Phone
+      <input type="tel" autocomplete="tel" required maxlength="20" class:list={[control, "px-3.5"]} />
+    </label>
+  </div>
+  <div class="grid gap-3.5 lg:grid-cols-2 lg:gap-4">
+    <label class:list={[label, phoneOnlyHidden]}>
+      City
+      <select class:list={[control, "px-3"]} required>
+        {site.areas.map((area) => <option>{area}</option>)}
+      </select>
+    </label>
+    <label class={label}>
+      Project
+      <select class:list={[control, "px-3"]} required>
+        {services.map((s) => <option>{s.data.formLabel}</option>)}
+      </select>
+    </label>
+  </div>
+  <label class:list={[label, phoneOnlyHidden]}>
+    Tell us about the project
+    <textarea
+      rows="4"
+      maxlength="2000"
+      class="w-full resize-y rounded-button border border-field bg-white px-3.5 py-3 text-base font-normal text-ink lg:text-[15px]"
+    ></textarea>
+  </label>
+  <Button type="submit" size="lg" full>Request my free quote</Button>
+  <p class="text-center text-[13px] text-ink-muted">Concept site: this form doesn’t send anything.</p>
+  <p role="status" data-form-status class="rounded-button text-[15px] font-semibold text-ink"></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>("[data-demo-form]").forEach((form) => {
+    const status = form.querySelector<HTMLElement>("[data-form-status]");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      form.reset();
+      if (status) {
+        status.textContent =
+          "Thanks! This is a concept site, so nothing was sent. On a real site, we'd call you back within one business day.";
+        status.classList.add("bg-surface-alt", "p-4");
+      }
+    });
+  });
+</script>

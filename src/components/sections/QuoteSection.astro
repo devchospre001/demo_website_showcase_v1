@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import Eyebrow from "../ui/Eyebrow.astro";
+import QuoteForm from "./QuoteForm.astro";
+import { phoneDisplay, phoneHref } from "../../lib/site";
+import hero from "../../assets/images/hero.svg";
+
+// Concept: phones show the heading and a short form; desktop adds the background photo,
+// the paragraph and a call button beside the full form.
+---
+
+<section id="quote" aria-labelledby="quote-title" class="on-dark relative isolate scroll-mt-24 overflow-hidden bg-night-2 py-(--section-y) text-white">
+  <Image src={hero} alt="" class="absolute inset-0 -z-10 hidden size-full object-cover opacity-[0.22] lg:block" />
+  <Container class="grid gap-[18px] lg:grid-cols-2 lg:items-center lg:gap-20">
+    <div class="flex flex-col gap-[18px] lg:gap-6">
+      <Eyebrow dark>Free on-site design visit</Eyebrow>
+      <h2 id="quote-title" class="text-[40px] leading-[1.02] lg:text-[64px]">Tell us about your backyard.</h2>
+      <p class="hidden max-w-[520px] text-[19px] leading-[1.7] text-on-photo lg:block">
+        Send a few details and we’ll call within one business day to book a visit. No pressure, no obligation.
+      </p>
+      <Button href={phoneHref} variant="outline-light" size="lg" class="hidden self-start lg:inline-flex">
+        Rather talk? Call {phoneDisplay}
+      </Button>
+    </div>
+    <QuoteForm />
+  </Container>
+</section>

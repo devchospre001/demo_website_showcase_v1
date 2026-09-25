@@ -1,6 +1,6 @@
 # Architecture
 
-Shared by every [Studio Name] client site. Do not edit in a client repo.
+Shared by every Perennial Studio client site. Do not edit in a client repo.
 Client-specific deviations go in the "Tech notes" section of `docs/spec.md`.
 
 ## 1. Context and goals

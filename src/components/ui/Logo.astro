@@ -1,0 +1,33 @@
+---
+import { site } from "../../lib/site";
+
+// Wordmark: coquina "C" mark + name. `stacked` is the centered footer version.
+interface Props {
+  variant?: "header" | "stacked";
+}
+const { variant = "header" } = Astro.props;
+---
+
+{
+  variant === "header" ? (
+    <a href="/" class="flex min-h-11 items-center gap-2.5 text-ink no-underline hover:text-ink lg:gap-3">
+      <svg width="40" height="40" viewBox="0 0 32 32" aria-hidden="true" class="size-[34px] lg:size-10">
+        <rect width="32" height="32" rx="16" class="fill-brand" />
+        <path d="M21.5 11.2A7 7 0 1 0 21.5 20.8" fill="none" class="stroke-accent" stroke-width="2.6" stroke-linecap="round" />
+      </svg>
+      <span class="flex flex-col leading-none">
+        <span class="font-heading text-2xl font-bold lg:text-[28px]">Coquina</span>
+        <span class="mt-[3px] text-[9px] font-semibold tracking-[0.32em] text-ink-muted lg:mt-1 lg:text-[11px]">STONEWORKS</span>
+        <span class="sr-only">{site.name}, home</span>
+      </span>
+    </a>
+  ) : (
+    <a href="/" class="flex flex-col items-center gap-6 text-white no-underline hover:text-white lg:gap-3">
+      <svg width="48" height="48" viewBox="0 0 32 32" aria-hidden="true" class="size-11 lg:size-12">
+        <rect width="32" height="32" rx="16" class="fill-accent" />
+        <path d="M21.5 11.2A7 7 0 1 0 21.5 20.8" fill="none" class="stroke-night" stroke-width="2.6" stroke-linecap="round" />
+      </svg>
+      <span class="font-heading text-[30px] leading-none font-bold lg:text-4xl">{site.name}</span>
+    </a>
+  )
+}

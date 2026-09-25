@@ -1,8 +1,18 @@
 # CLAUDE.md
 
-This repo is a static marketing website for ONE US landscaping / hardscaping business,
-built from the [Studio Name] starter template. The site's job: turn local visitors into
-quote requests and phone calls.
+This repo is a static marketing website for ONE US landscaping / hardscaping business.
+It is a Perennial Studio demo (concept) site for Coquina Stoneworks, a fictional
+hardscaping company in St. Augustine, FL. The site's job: show what a Perennial Studio
+site does for a real client, turning local visitors into quote requests and phone calls.
+
+## Demo mode (this repo only; overrides "Never invent" below)
+
+- The business is fictional. Names must not match real local companies.
+- Sample reviews, stats, prices and copy are allowed but must be plausible and never
+  attributed to real people.
+- Phone numbers use the fictional range 555-0100 to 555-0199.
+- Footer shows "Concept site by Perennial Studio" on every page.
+- Images are AI-generated and disclosed as concept imagery.
 
 ## Context (read before any task)
 

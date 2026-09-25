@@ -1,0 +1,21 @@
+---
+import Container from "../ui/Container.astro";
+import Eyebrow from "../ui/Eyebrow.astro";
+
+// Title block for inner pages. Holds the page's only h1.
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+}
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<section class="border-b border-border bg-surface-alt">
+  <Container class="flex flex-col gap-4 py-14 md:gap-5 md:py-20">
+    <Eyebrow>{eyebrow}</Eyebrow>
+    <h1 class="max-w-4xl text-[2.75rem] leading-none md:text-6xl lg:text-7xl">{title}</h1>
+    {lead && <p class="max-w-2xl text-lg leading-relaxed text-ink-soft md:text-xl">{lead}</p>}
+    <slot />
+  </Container>
+</section>

@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+// Photo grid. Every tile is a plain link to the project page, so it works without JS.
+// "featured" follows the concept: phones show one 300px tile plus two 170px tiles with labels;
+// desktop shows a 3-column grid, 340px rows, the first tile spanning both rows.
+interface Props {
+  projects: CollectionEntry<"projects">[];
+  layout?: "featured" | "grid";
+  headingLevel?: "h2" | "h3";
+}
+
+const { projects, layout = "grid", headingLevel = "h3" } = Astro.props;
+const Heading = headingLevel;
+const featured = layout === "featured";
+---
+
+<ul
+  class:list={[
+    "grid gap-3",
+    featured
+      ? "grid-cols-2 gap-y-4 lg:grid-cols-3 lg:grid-rows-[340px_340px] lg:gap-5"
+      : "sm:grid-cols-2 md:gap-5 lg:grid-cols-3",
+  ]}
+>
+  {
+    projects.map((p, i) => {
+      const cover = p.data.images[0]!;
+      const big = featured && i === 0;
+      const labelOnly = featured && (i === 1 || i === 2);
+      return (
+        <li
+          class:list={[
+            featured && big && "col-span-2 lg:col-span-1 lg:row-span-2",
+            featured && i > 2 && "hidden lg:block",
+          ]}
+        >
+          <a
+            href={`/projects/${p.id}/`}
+            class:list={[
+              "group relative block overflow-hidden rounded-card text-white no-underline hover:text-white",
+              featured ? (big ? "h-[300px] lg:h-full" : "h-[170px] lg:h-full") : "aspect-4/3",
+            ]}
+          >
+            <Image
+              src={cover.src}
+              alt={cover.alt}
+              class="absolute inset-0 size-full object-cover transition-transform duration-200 group-hover:scale-[1.03]"
+            />
+            {labelOnly && (
+              <span class="absolute bottom-2.5 left-2.5 rounded bg-scrim/80 px-2 py-1 text-[13px] font-semibold lg:hidden">
+                {p.data.shortTitle ?? p.data.title}
+              </span>
+            )}
+            <span
+              class:list={[
+                "absolute inset-x-0 bottom-0 flex-col gap-0.5 bg-linear-to-t from-scrim/85 to-scrim/0 px-[18px] py-4 lg:px-6 lg:py-5",
+                labelOnly ? "hidden lg:flex" : "flex",
+              ]}
+            >
+              <Heading class="text-2xl lg:text-[26px]">{p.data.title}</Heading>
+              <span class="text-sm text-on-photo-muted">
+                {featured && p.data.captionShort ? (
+                  <>
+                    <span class="lg:hidden">{p.data.captionShort}</span>
+                    <span class="hidden lg:inline">{p.data.caption}</span>
+                  </>
+                ) : (
+                  p.data.caption
+                )}
+              </span>
+            </span>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>

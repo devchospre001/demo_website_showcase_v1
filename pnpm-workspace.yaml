@@ -1,0 +1,10 @@
+# Supply-chain rules. See docs/architecture.md section 7. Never lower minimumReleaseAge.
+minimumReleaseAge: 10080      # 7 days: new package versions are quarantined
+trustPolicy: no-downgrade     # reject versions whose publishing trust signals regressed
+trustPolicyExclude:
+  - chokidar@4.0.3
+  - semver@5.7.2
+  - semver@6.3.1
+allowBuilds:                  # install scripts are blocked except for these
+  esbuild: true
+  workerd: false

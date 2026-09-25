@@ -1,0 +1,29 @@
+---
+import Container from "../ui/Container.astro";
+import { site } from "../../lib/site";
+
+// Only facts from src/lib/site.ts (brief sections 2 and 6).
+// Concept: 2x2 on phones with shorter labels, 4 columns with dividers on desktop.
+const items = [
+  { big: `Since ${site.founded}`, small: "Building in St. Johns County", smallMobile: "In St. Johns County" },
+  { big: "5-year", small: "Workmanship warranty", smallMobile: "Workmanship warranty" },
+  { big: "One crew", small: "Owner on every job", smallMobile: "Owner on every job" },
+  { big: "3D design", small: "You see it before we dig", smallMobile: "Before we dig" },
+];
+---
+
+<section aria-label="Why homeowners trust us" class="border-b border-border bg-surface-alt">
+  <Container>
+    <ul class="grid grid-cols-2 gap-x-4 gap-y-5 py-7 lg:grid-cols-4 lg:gap-8 lg:py-10">
+      {
+        items.map((item, i) => (
+          <li class:list={["flex flex-col gap-0.5 lg:gap-1", i > 0 && "lg:border-l lg:border-border lg:pl-8"]}>
+            <span class="font-heading text-[28px] leading-[1.05] font-bold text-brand lg:text-[40px] lg:leading-none">{item.big}</span>
+            <span class="text-sm text-ink-muted lg:hidden">{item.smallMobile}</span>
+            <span class="hidden text-base text-ink-muted lg:block">{item.small}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</section>

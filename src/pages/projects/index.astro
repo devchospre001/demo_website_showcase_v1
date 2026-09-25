@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CTABand from "../../components/sections/CTABand.astro";
+import PageHeader from "../../components/sections/PageHeader.astro";
+import ProjectFilters from "../../components/sections/ProjectFilters.astro";
+import ProjectGallery from "../../components/sections/ProjectGallery.astro";
+import Section from "../../components/ui/Section.astro";
+
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Our Projects | Coquina Stoneworks"
+  description="Patios, outdoor kitchens, retaining walls and pool decks across St. Johns County."
+>
+  <PageHeader eyebrow="Projects" title="Recent work" lead="Backyards we’ve built across St. Johns County.">
+    <div class="mt-2"><ProjectFilters /></div>
+  </PageHeader>
+  <Section>
+    <h2 class="sr-only">All projects</h2>
+    <ProjectGallery projects={projects} />
+  </Section>
+  <CTABand />
+</BaseLayout>

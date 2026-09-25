@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/sections/PageHeader.astro";
+import Section from "../components/ui/Section.astro";
+import { phoneDisplay, phoneHref, site } from "../lib/site";
+---
+
+<BaseLayout title={`Accessibility | ${site.name}`} description={`${site.name} builds this site to WCAG 2.1 AA.`}>
+  <PageHeader eyebrow="Accessibility" title="Accessibility" lead="This site is built to meet WCAG 2.1 level AA." />
+  <Section>
+    <div class="flex max-w-prose flex-col gap-5 text-lg leading-[1.7] text-ink-soft">
+      <p>
+        Every page works with a keyboard and a screen reader, keeps text contrast at 4.5:1 or better, respects your
+        reduced-motion setting and works without JavaScript. We don’t use accessibility overlay widgets.
+      </p>
+      <p>
+        If something is hard to use, call <a href={phoneHref} class="font-semibold underline">{phoneDisplay}</a> and
+        we’ll help and fix it.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
