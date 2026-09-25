@@ -1,4 +1,5 @@
 ---
+import { url } from "../../lib/url";
 import type { GetStaticPaths } from "astro";
 import { Image } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
@@ -72,7 +73,7 @@ const facts = [
         <div class="text-lg leading-[1.7] text-ink-soft">
           <Content />
         </div>
-        <a href="/projects/" class="inline-flex min-h-11 items-center font-semibold">Back to all projects</a>
+        <a href={url("/projects/")} class="inline-flex min-h-11 items-center font-semibold">Back to all projects</a>
       </div>
     </div>
   </Section>

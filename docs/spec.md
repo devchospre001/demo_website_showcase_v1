@@ -11,7 +11,7 @@ Status: APPROVED (date: 2026-09-24, owner approved the concept design canvas)
 - Client: Coquina Stoneworks (fictional, Perennial Studio concept site)
 - Primary goal (from brief): qualified quote requests for patios and outdoor kitchens
 - Primary CTA: Get a free quote (secondary: Call)
-- Launch target: Cloudflare preview URL only
+- Launch target: GitHub Pages, https://devchospre001.github.io/demo_website_showcase_v1/
 
 ## 2. Sitemap
 
@@ -133,6 +133,15 @@ in `docs/design-system.md` §2 for every change.
   - Form inputs are 16px on phones (concept: 15px) so iOS doesn't zoom in on focus.
   - Footer links keep a 44px tap target, so the footer is slightly taller than the concept.
   - "See all projects" shows the real project count instead of the concept's "24".
+- **Hosting: GitHub Pages instead of Cloudflare** (owner's decision for this demo).
+  `.github/workflows/deploy.yml` builds with `withastro/action` (pnpm 11) and deploys on every
+  push to `main`. The site is a project site under `base: "/demo_website_showcase_v1"`, so
+  every internal link goes through `url()` in `src/lib/url.ts`; a test fails if one doesn't.
+  Trade-offs: GitHub Pages ignores `public/_headers`, so those security headers
+  (X-Frame-Options, `frame-ancestors`, Permissions-Policy, etc.) are not sent. The CSP
+  `<meta>` tag still applies, and github.io already forces HTTPS with HSTS. `robots.txt` sits
+  under the subfolder, where crawlers don't look; fine for a demo. Client sites stay on
+  Cloudflare as in `docs/architecture.md`.
 - **Mobile menu** is a native `<details>` element (works without JS); a small script adds
   Esc-to-close and closes it after a link is followed.
 - **Project gallery lightbox** is not built yet: tiles link to project pages, which is the

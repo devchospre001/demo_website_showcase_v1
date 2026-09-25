@@ -3,6 +3,7 @@ import { Font } from "astro:assets";
 import SiteFooter from "../components/sections/SiteFooter.astro";
 import SiteHeader from "../components/sections/SiteHeader.astro";
 import { site } from "../lib/site";
+import { url } from "../lib/url";
 import "../styles/global.css";
 
 interface Props {
@@ -25,7 +26,7 @@ const jsonLd = {
   name: site.name,
   legalName: site.legalName,
   description: site.tagline,
-  url: Astro.site?.href,
+  url: new URL(url("/"), Astro.site).href,
   telephone: site.phone,
   email: site.email,
   foundingDate: String(site.founded),
@@ -50,8 +51,8 @@ const jsonLd = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.href} />
     {noindex && <meta name="robots" content="noindex" />}
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" href={url("/favicon.svg")} type="image/svg+xml" />
+    <link rel="sitemap" href={url("/sitemap-index.xml")} />
     <meta name="theme-color" content="#231E19" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />

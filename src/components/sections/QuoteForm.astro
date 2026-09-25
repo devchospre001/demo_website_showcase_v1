@@ -1,4 +1,5 @@
 ---
+import { url } from "../../lib/url";
 import { getCollection } from "astro:content";
 import Button from "../ui/Button.astro";
 import { site } from "../../lib/site";
@@ -23,7 +24,7 @@ const phoneOnlyHidden = mobileCompact ? "max-lg:hidden" : "";
 
 <form
   id={id}
-  action="/quote-demo/"
+  action={url("/quote-demo/")}
   method="get"
   data-demo-form
   aria-label="Request a free quote"

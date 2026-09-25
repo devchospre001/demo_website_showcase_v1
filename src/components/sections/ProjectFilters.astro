@@ -1,4 +1,5 @@
 ---
+import { url } from "../../lib/url";
 import { getCollection } from "astro:content";
 
 // Filter chips: each is a real page, so filtering works without JS.
@@ -16,8 +17,8 @@ const shortNames: Record<string, string> = {
   "pool-decks": "Pool decks",
 };
 const links = [
-  { label: "All", href: "/projects/", id: undefined as string | undefined },
-  ...services.map((s) => ({ label: shortNames[s.id] ?? s.data.title, href: `/projects/type/${s.id}/`, id: s.id as string | undefined })),
+  { label: "All", href: url("/projects/"), id: undefined as string | undefined },
+  ...services.map((s) => ({ label: shortNames[s.id] ?? s.data.title, href: url(`/projects/type/${s.id}/`), id: s.id as string | undefined })),
 ];
 const base = "inline-flex h-11 items-center rounded-full px-[18px] text-[15px] font-medium no-underline";
 ---

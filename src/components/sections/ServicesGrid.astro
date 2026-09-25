@@ -1,4 +1,5 @@
 ---
+import { url } from "../../lib/url";
 import { getCollection } from "astro:content";
 import Card from "../ui/Card.astro";
 import Eyebrow from "../ui/Eyebrow.astro";
@@ -23,7 +24,7 @@ const services = (await getCollection("services")).sort((a, b) => a.data.order -
       </div>
       {
         showAllLink && (
-          <a href="/services/" class="hidden items-center gap-2 text-[17px] font-semibold underline lg:inline-flex">
+          <a href={url("/services/")} class="hidden items-center gap-2 text-[17px] font-semibold underline lg:inline-flex">
             All services
             <Icon name="arrow" size={18} />
           </a>
@@ -35,7 +36,7 @@ const services = (await getCollection("services")).sort((a, b) => a.data.order -
         services.map((s) => (
           <li class="flex">
             <Card
-              href={`/services/${s.id}/`}
+              href={url(`/services/${s.id}/`)}
               image={s.data.heroImage}
               imageAlt={s.data.heroAlt}
               title={s.data.title}

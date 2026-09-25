@@ -1,4 +1,5 @@
 ---
+import { url } from "../../lib/url";
 import { Image } from "astro:assets";
 import Eyebrow from "../ui/Eyebrow.astro";
 import Icon from "../ui/Icon.astro";
@@ -42,7 +43,7 @@ const principles = [
           That’s how we think about every backyard: start with the ground, respect the weather, and build it to
           outlast us.
         </p>
-        <a href="/about/" class="hidden items-center gap-2 self-start text-[17px] font-semibold underline lg:inline-flex">
+        <a href={url("/about/")} class="hidden items-center gap-2 self-start text-[17px] font-semibold underline lg:inline-flex">
           Meet the crew
           <Icon name="arrow" size={18} />
         </a>

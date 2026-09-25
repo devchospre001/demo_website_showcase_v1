@@ -1,6 +1,8 @@
 // Single source of truth for business facts. Values come from docs/brief.md section 2.
 // DEMO: Coquina Stoneworks is fictional (see "Demo mode" in CLAUDE.md).
 
+import { url } from "./url";
+
 export const site = {
   name: "Coquina Stoneworks",
   legalName: "Coquina Stoneworks LLC",
@@ -43,11 +45,11 @@ export const phoneHref = `tel:${site.phone}`;
 
 /** Main navigation, used by the header, mobile menu and footer. */
 export const nav = [
-  { label: "Services", href: "/services/" },
-  { label: "Projects", href: "/projects/" },
-  { label: "Our story", href: "/about/" },
-  { label: "Reviews", href: "/#reviews" },
-  { label: "FAQ", href: "/#faq" },
+  { label: "Services", href: url("/services/") },
+  { label: "Projects", href: url("/projects/") },
+  { label: "Our story", href: url("/about/") },
+  { label: "Reviews", href: url("/#reviews") },
+  { label: "FAQ", href: url("/#faq") },
 ] as const;
 
-export const quoteHref = "/contact/";
+export const quoteHref = url("/contact/");

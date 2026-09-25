@@ -4,8 +4,10 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  // Demo: replace with the preview URL after the first `pnpm deploy:preview`.
-  site: "https://coquina-stoneworks.example.com",
+  // Hosted on GitHub Pages as a project site: https://devchospre001.github.io/demo_website_showcase_v1/
+  // Every internal link goes through url() in src/lib/url.ts so it includes `base`.
+  site: "https://devchospre001.github.io",
+  base: "/demo_website_showcase_v1",
   output: "static",
   trailingSlash: "always",
   integrations: [

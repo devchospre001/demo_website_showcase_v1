@@ -8,12 +8,14 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: "list",
   use: {
-    baseURL: "http://localhost:4321",
+    // The site lives under the GitHub Pages base path (astro.config.mjs `base`).
+    // Tests use relative paths ("services/") so they resolve inside it.
+    baseURL: "http://localhost:4321/demo_website_showcase_v1/",
     trace: "retain-on-failure",
   },
   webServer: {
     command: "pnpm build && pnpm preview",
-    url: "http://localhost:4321",
+    url: "http://localhost:4321/demo_website_showcase_v1/",
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
   },

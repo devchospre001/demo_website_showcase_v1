@@ -1,4 +1,5 @@
 ---
+import { url } from "../../lib/url";
 import Container from "../ui/Container.astro";
 import Logo from "../ui/Logo.astro";
 import { nav, phoneDisplay, phoneHref, quoteHref, site } from "../../lib/site";
@@ -49,9 +50,9 @@ const footerNav = [...nav, { label: "Get a quote", href: quoteHref }];
         © {year} {site.legalName}
         <span class="hidden lg:inline">
           {" · "}
-          <a href="/privacy/" class="text-on-night-muted underline hover:text-white">Privacy</a>
+          <a href={url("/privacy/")} class="text-on-night-muted underline hover:text-white">Privacy</a>
           {" · "}
-          <a href="/accessibility/" class="text-on-night-muted underline hover:text-white">Accessibility</a>
+          <a href={url("/accessibility/")} class="text-on-night-muted underline hover:text-white">Accessibility</a>
         </span>
       </p>
       <p class="max-w-2xl leading-normal text-sand-ink lg:leading-[normal]">
